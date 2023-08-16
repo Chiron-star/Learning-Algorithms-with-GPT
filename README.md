@@ -1,2 +1,2 @@
-# Resume_Algorithm
-A personal notebook or collection of algorithm of resume test.
+# Learning Algorithm with GPT
+A personal notebook or collection of learning algorithm with GPT
