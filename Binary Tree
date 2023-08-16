@@ -1,0 +1,73 @@
+已知一棵二叉树，如果先序遍历的节点顺序是: ACEFHDG，中序遍历是: FEHCADG，则后序遍历结果为:( )
+
+思路;
+
+先序遍历（根、左、右）的顺序是：ACEFHDG
+中序遍历（左、根、右）的顺序是：FEHCADG
+
+我们可以通过这两个遍历来构建这棵二叉树，然后再得到后序遍历的结果。
+
+1. **构建树**：
+    - 先序遍历的第一个元素A是根节点。
+    - 中序遍历中根节点A的左侧FEHC是左子树，右侧DG是右子树。
+    - 以此类推，递归构建左右子树。
+2. **后序遍历**：
+    - 在后序遍历中，我们先访问左子树，再访问右子树，最后访问根节点。
+
+按照这个思路，我们可以得到后序遍历的结果：
+
+- 左子树FEHC：
+    - 左子树F
+    - 右子树EHC
+        - 左子树EH
+            - 左子树E
+            - 右子树H
+        - 右子树C
+- 右子树DG
+    - 左子树D
+    - 右子树G
+
+因此，后序遍历的结果是：FHECGDA
+
+正确的选项是 FHECGDA
+
+def build_tree(preorder, inorder):
+    if not preorder or not inorder:
+        return None
+
+    root_val = preorder[0]
+    root = TreeNode(root_val)
+
+    # 找到中序遍历中根节点的位置
+    index = inorder.index(root_val)
+
+    # 递归构建左子树和右子树
+    root.left = build_tree(preorder[1:index + 1], inorder[:index])
+    root.right = build_tree(preorder[index + 1:], inorder[index + 1:])
+
+    return root
+
+
+def postorder_traversal(root, result):
+    if not root:
+        return
+    postorder_traversal(root.left, result)
+    postorder_traversal(root.right, result)
+    result.append(root.val)
+
+
+class TreeNode:
+    def __init__(self, x):
+        self.val = x
+        self.left = None
+        self.right = None
+
+
+preorder = list("ACEFHDG")
+inorder = list("FEHCADG")
+root = build_tree(preorder, inorder)
+
+# 后序遍历结果
+result = []
+postorder_traversal(root, result)
+print("".join(result))  # 输出 FHECGDA
