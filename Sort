@@ -1,0 +1,21 @@
+# quick sort
+
+def quick_sort(books):
+    if len(books) <= 1:
+        return books
+    pivot = books[len(books) // 2]
+    left = [x for x in books if x['title'] < pivot['title']]
+    middle = [x for x in books if x['title'] == pivot['title']]
+    right = [x for x in books if x['title'] > pivot['title']]
+    return quick_sort(left) + middle + quick_sort(right)
+books = [
+    {'title': 'The Great Gatsby', 'author': 'F. Scott Fitzgerald'},
+    {'title': 'To Kill a Mockingbird', 'author': 'Harper Lee'},
+    {'title': 'Moby-Dick', 'author': 'Herman Melville'},
+    {'title': '1984', 'author': 'George Orwell'},
+    {'title': 'War and Peace', 'author': 'Leo Tolstoy'},
+]
+
+sorted_books = quick_sort(books)
+for book in sorted_books:
+    print(f"Title: {book['title']}, Author: {book['author']}")
